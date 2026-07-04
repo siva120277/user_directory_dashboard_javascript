@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+
+    <h1>User Directory Dashboard</h1>
+
+    <input type="text" id="input" placeholder="Enter the name you need to search">
+
+    <button id="bt">Load Users</button>
+    <button id="bt1">Load Posts</button>
+
+    <div id="output"></div>
+
+<script>
+var a = document.querySelector("#input");
+var b = document.querySelector("#bt");
+var c = document.querySelector("#bt1");
+var d = document.querySelector("#output");
+var users = [];
+
+b.addEventListener("click", function () {
+
+    async function show() {
+
+        var e = await fetch("https://jsonplaceholder.typicode.com/users");
+
+        users = await e.json();
+
+        d.innerHTML = "";
+
+        users.forEach(function (ob) {
+
+            var g = document.createElement("div");
+
+            g.innerHTML = `
+                <h3>${ob.name}</h3>
+                <p>Email: ${ob.email}</p>
+                <p>Phone: ${ob.phone}</p>
+            `;
+
+            d.append(g);
+
+        });
+
+    }
+
+    show();
+
+});
+
+c.addEventListener("click", function () {
+
+    async function show1() {
+
+        var h = await fetch("https://jsonplaceholder.typicode.com/posts");
+
+        var i = await h.json();
+
+        d.innerHTML = "";
+
+        i.forEach(function (oc) {
+
+            var j = document.createElement("div");
+
+            j.innerHTML = `
+                <h3>${oc.title}</h3>
+                <p>${oc.body}</p>
+            `;
+
+            d.append(j);
+
+        });
+
+    }
+
+    show1();
+
+});
+
+a.addEventListener("input", function () {
+
+    var search = a.value.toLowerCase();
+
+    d.innerHTML = "";
+
+    users.forEach(function (user) {
+
+        if (user.name.toLowerCase().includes(search)) {
+
+            var div = document.createElement("div");
+
+            div.innerHTML = `
+                <h3>${user.name}</h3>
+                <p>Email: ${user.email}</p>
+                <p>Phone: ${user.phone}</p>
+            `;
+
+            d.append(div);
+
+        }
+
+    });
+
+});
+</script>
+
+</body>
+</html>
